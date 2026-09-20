@@ -1,3 +1,60 @@
 <!doctype html>
-<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ebook gratuito — Riccardo Calli</title><meta name="description" content="Scarica l’ebook gratuito di Riccardo “Saiu” Calli."><link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="styles.css"></head>
-<body><header class="site-header"><a class="brand" href="index.html">Riccardo “Saiu” Calli</a><nav aria-label="Navigazione principale"><a href="studiaconme.html">Studia con me</a><a href="manualedelpraticante.html">Ebook gratuito</a><a href="contatti.html">Contatti</a></nav><div class="socials"><a href="https://www.tiktok.com/@riccardosaiucalli">TikTok</a><a href="https://www.instagram.com/riccardo.saiu.calli/">Instagram</a><a href="https://www.youtube.com/channel/UCAdzPhINK3UaXj8BJu5Mjwg">YouTube</a></div></header><main><section class="hero"><p class="eyebrow">Risorsa gratuita</p><h1>Manuale del praticante.</h1><p class="lead">Un punto di partenza per osservare, esplorare e sviluppare il tuo rapporto con il movimento.</p></section><section class="copy-section"><h2>Il movimento è un percorso.</h2><p>Questa pagina raccoglie la risorsa gratuita resa disponibile pubblicamente sul sito.</p><p>Per ricevere informazioni e disponibilità, scrivimi direttamente.</p><a class="button" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=riccardo.calli%40gmail.com&amp;su=Richiesta%20ebook%20gratuito">Richiedi l’ebook</a></section></main><footer><p>Riccardo Calli</p><p>P.IVA: 05524840286</p><p>Via Emilio Salgari 12, 35125, Padova (PD)</p></footer></body></html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ebook gratuito — Riccardo Calli</title>
+<meta name="description" content="Scarica l’ebook gratuito di Riccardo “Saiu” Calli.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="site-header">
+<a class="brand" href="index.html">Riccardo “Saiu” Calli</a>
+<nav aria-label="Navigazione principale"><a href="studiaconme.html">Studia con me</a><a href="manualedelpraticante.html">Ebook gratuito</a><a href="contatti.html">Contatti</a></nav>
+<div class="socials"><a href="https://www.tiktok.com/@riccardosaiucalli">TikTok</a><a href="https://www.instagram.com/riccardo.saiu.calli/">Instagram</a><a href="https://www.youtube.com/channel/UCAdzPhINK3UaXj8BJu5Mjwg">YouTube</a></div>
+</header>
+<main>
+<section class="hero">
+<p class="eyebrow">Risorsa gratuita</p>
+<h1>Manuale del praticante.</h1>
+<p class="lead">Un piccolo documento che contiene tutte le informazioni utili per comprendere questa disciplina e muovere i primi passi.</p>
+</section>
+<section class="copy-section">
+<h2>Ricevi una copia.</h2>
+<p>Che sia l’inizio di una nuova passione o semplicemente una mezz’oretta spesa a imparare qualcosa di nuovo, spero possa piacerti!</p>
+<form class="ebook-form" id="ebook-form">
+<label for="email">E-mail <span>(obbligatorio)</span></label>
+<input id="email" name="email" type="email" required>
+<label for="name">Nome <span>(obbligatorio)</span></label>
+<input id="name" name="name" type="text" required>
+<label for="surname">Cognome <span>(obbligatorio)</span></label>
+<input id="surname" name="surname" type="text" required>
+<button class="button" type="submit" id="ebook-submit">Inviami una copia!</button>
+<p class="form-status" id="ebook-status" role="status" aria-live="polite"></p>
+</form>
+</section>
+</main>
+<footer><p>Riccardo Calli</p><p>P.IVA: 05524840286</p><p>Via Emilio Salgari 12, 35125, Padova (PD)</p></footer>
+<script>
+const ebookForm=document.getElementById('ebook-form');
+const ebookStatus=document.getElementById('ebook-status');
+const ebookSubmit=document.getElementById('ebook-submit');
+ebookForm.addEventListener('submit',async event=>{
+  event.preventDefault();
+  ebookSubmit.disabled=true;
+  ebookStatus.textContent='Invio in corso…';
+  const data=Object.fromEntries(new FormData(ebookForm).entries());
+  try{
+    const response=await fetch('https://script.google.com/macros/s/AKfycbxy5TKDcrT1o5raLO5D5NLQEXJ78ht-OavnB1xuSkxeIJynwhNgP7aP3OxZGeW_VGGMGg/exec',{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)});
+    const result=await response.json();
+    if(!result.ok) throw new Error(result.error||'Invio non riuscito.');
+    ebookStatus.textContent=result.message||'Manuale inviato. Controlla la tua email.';
+    ebookForm.reset();
+  }catch(error){
+    ebookStatus.textContent=error.message||'Invio non riuscito. Riprova tra poco.';
+  }finally{ebookSubmit.disabled=false;}
+});
+</script>
+</body>
+</html>
